@@ -28,5 +28,5 @@ Collabify leverages the power of third-party services to enhance its functionali
 
 - [Excalidraw](https://excalidraw.com/): An interactive virtual whiteboard for visual collaboration.
 - [Thinq AI](https://tinq.ai/): AI-powered paraphrasing for text content.
-- SMTP for email integration: Provides a seamless email communication system for private groups.
+- SMTP for email integration: Provides a seamless email communication system.
 
