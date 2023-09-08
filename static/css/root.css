@@ -1,0 +1,22 @@
+:root{
+    --primary:#152842;
+    --secondary:#213b5f;
+
+    
+    --gray-light:#f3f3f3;
+    --gray-eee:#eee;
+    --gray-p:#8d9197;
+    --black:#000;
+    --gray-ddd:#dddddd;
+    --btn-hover-primary:#1f5ee6e8;
+    --active:#1DD75BFF;
+    --gray-border:#acacac;
+    --white:#fff;
+    --border-radius:0.5rem;
+    --font-size-p-1_2rem:1.3rem;
+    --font-size-h-3rem:3rem;
+    --font-size-h-1_5rem:1.5rem;
+    --font-size-h-2rem:1.8rem;
+    --font-size-p-1_3rem:2rem;
+    --font-family:'Nunito', sans-serif;
+}

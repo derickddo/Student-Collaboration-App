@@ -1,0 +1,66 @@
+{% extends 'dashboard_wrapper.html' %}
+{% load socialaccount %}
+{% load static %}
+{% block content %}
+<!--Group section-->
+{% if groups %}
+<section class="group-section">
+    <div class="group-wrapper container">
+    
+        <div class="header-container">
+            <h1>Public Groups</h1>
+
+            <a class="btn btn-primary" href="{% url 'dashboard' %}">private groups</a>
+    
+        </div>
+            
+
+        {% include 'collaboration_app/components/group_component.html' %}
+        
+    </div>
+</section>
+<!--End of group section-->
+
+<!--Task section-->
+<section class="task-section">
+    <div class="task-wrapper container">
+        <div class="task-header">
+            <h1>Assigned Task</h1>
+            {% if request.user == group.group_head %}
+                <div class="">
+                    <a class="btn" href="{% url 'create_task' group.pk %}">Create Task</a>
+                </div>
+            {% endif %}
+        </div>
+        
+        {% include 'collaboration_app/components/task_component.html' %}
+        
+    </div>
+    
+</section>
+<!--End of task section-->
+
+<!--Activity section-->
+<section class="activity-section" id="activity-section">
+    <div class="activity-wrapper container">
+        <h1>Recent Activities</h1>
+        {% include 'collaboration_app/components/discussion_component.html' %}
+    </div>
+</section>
+<!--End of activity section-->
+{% else %}
+<div class="empty group-empty">
+    <div class="">
+        <img class="empty-img" src="{% static 'static_files/empty.svg' %}" alt="">
+    </div>
+    <h1>Oops</h1>
+    <p>No public groups found</p>
+    <br>
+    <br>
+    <a class="btn btn-primary" href="{% url 'create_group' %}">Create a group</a>
+    <br>
+    <a class="btn btn-primary" href="{% url 'dashboard' %}">Go to your private groups</a>
+</div>
+{% endif %}
+
+{% endblock content %}

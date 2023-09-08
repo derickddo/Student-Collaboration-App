@@ -1,0 +1,34 @@
+.container{
+    width: 60%;
+}
+.profile-container-section{
+    margin-top: 5rem;
+    height: 100vh;
+    padding-top: 4rem;
+}
+.profile-container{
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+}
+.right-section{
+    background: white;
+    height: 6rem;
+}
+.profile-img{
+    position: absolute;
+}
+.profile-img img{
+    width: 15%;
+    
+}
+.img-top-container{
+    background: url(static/static_files/students.png) cover/center;
+    height: 10rem;
+    background: white;
+    width: 100%;
+    border-bottom: 2px solid gray;
+}
+.bottom {
+    background: white;
+    height: 5rem;
+}

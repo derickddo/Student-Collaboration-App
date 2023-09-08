@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+{% load static %}
+{% load socialaccount %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!--Nunito font-->
+    <link href="https://fonts.googleapis.com/css2?family=Nunito&display=swap" rel="stylesheet">
+
+    <!--Iconscout cdn-->
+    <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.8/css/line.css">
+
+    <!--Bootstrap icon cdn-->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+
+    
+    {% block bootstrap_css %}
+    
+    {% endblock bootstrap_css %}
+
+    {% block head %}
+    
+    {% endblock head %}
+    
+    <!--Dashboard stylesheet-->
+    <link rel="stylesheet" href="{% static 'css/dashboard.css' %}">
+
+    {% block ajax %}{% endblock ajax %}
+
+    <title>Document</title>
+</head>
+<body>
+    <main>
+
+        <!--Sidebar-->
+        <div class="sidebar">
+            <nav class="navbar">
+                <div class="">
+                    
+                    <ul class="nav-items">
+                        <li><a href="{% url 'dashboard' %}"><i class="bi bi-house"></i>Dashboard</a></li>
+                        <li><a href="{% url 'create_group' %}"><i class="bi bi-plus-square"></i>Create</a></li>
+                        <li><a href="{% url 'join_group' %}"><i class="bi bi-bookmark"></i>Join</a></li>
+                        <li><a href="#activity-section"><i class="bi bi-activity"></i>Activities</a></li>
+                        {% block whiteboard %}
+                        
+                        {% endblock whiteboard %}
+                        <!-- <li>Groups <i class="uil uil-angle-down"></i></li>
+                        <div class="group-dropdown">
+                            <a href="">Group 1</a>
+                            <a href="">Group 1</a>
+                            <a href="">Group 1</a>
+                        </div> -->
+                    </ul>
+                </div>
+                
+                <div class="nav-bottom">
+                    <div class="profile">
+                        {% get_social_accounts request.user as account %}
+                        <div class="avatar">
+                            {% if account %}
+                            <img src="{{ request.user.socialaccount_set.all.0.get_avatar_url }}" alt="" srcset="">
+                            {% else %}
+                            <img src="{{ request.user.avatar.url }}" alt="" srcset="">
+                            {% endif %}
+                            {% comment %} <div class="badge"></div> {% endcomment %}
+                        </div>
+                        <div class="navbar-name">
+                            <a class="navbar-name" href="">{{ request.user.first_name }}</a>
+                        </div>
+                        
+                        
+                    </div>
+                        <ul class="drop-up">
+                            <li><a href="{% url 'account_logout' %}">Logout</a></li>
+                            <li><a href="{% url 'profile' request.user.id %}">Profile</a></li>
+                        </ul>
+                    <i class="uil uil-angle-up"></i>
+                </div>
+            </nav>
+        </div>
+        <!--End of Sidebar-->
+
+        <!--Topbar-->
+        <section class="topbar">
+            <div class="topbar-wrapper container">
+                <div class="topbar-container">
+                    <h1 ><a class="dashboard-logo" href="/">Collabify</a></h1>
+
+                    <div class="menu">
+                       <i class="bi bi-list"></i>
+                       <i class="bi bi-x-lg"></i>
+                    </div>
+                    
+                    <div class="right">
+                        <form action="" method="get">
+                            <input type="search" name="search" id="" class="search-bar" placeholder="search">
+                        </form>
+                       
+                        <div class="notification-btn">
+                            <i class="bi bi-bell"></i>
+                        </div>
+                        <div class="notification-wrapper">
+                            <div class="notification-container">
+                                <div class="header">
+                                    <h1>Notifications</h1>
+                                </div>
+                                <p>{{ notification }}</p>
+                               
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+         <!--End of topbar-->
+
+        <!--Main-->
+        <section class="main">
+            
+            <!--Center section-->
+            <div class="center">
+                {% block content %}
+                
+                {% endblock content %}
+            </div>
+            <!--End of center section-->
+
+        </section>
+        <!--End of main section-->
+        
+    </main>
+    
+  <script src= {% static 'js/dashboard.js' %}></script>  
+  {% block paraphrase_ajax_script %}
+  
+  {% endblock paraphrase_ajax_script %} 
+  
+  {% block bootstrap_js %}
+  
+  {% endblock bootstrap_js %}
+</body>
+</html>

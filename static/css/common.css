@@ -1,0 +1,64 @@
+/*-----------Common for all pages--------------*/
+*{
+    box-sizing: border-box;
+    list-style: none;
+    text-decoration: none;
+    margin: 0;
+    padding: 0;
+    line-height: 1.5;
+    font-family: var(--font-family);
+    border: 0;
+}
+
+.btn-outline:hover{
+    background:var(--primary);
+    color: var(--white);
+}
+
+.btn-secondary:hover{
+    background:var(--secondary-1);
+    color: var(--white);
+}
+.btn-outline{
+    border: 1px solid var(--white);
+    color: var(--white);
+    padding: 0.5rem 1rem;
+    border-radius: 0.3rem;
+}
+.btn{
+    padding: 0.7rem 1rem; 
+    border-radius: 0.3rem;
+    cursor: pointer;
+    border: 0;
+    color: #fff;
+}
+.btn-primary{
+    background: var(--secondary);
+}
+.btn-primary:hover{
+    background: var(--primary);
+}
+.btn-primary:active{
+    background:var(--primary)
+}
+.btn-secondary{
+    background: var(--secondary);
+}
+h1, h2, h3, h4{
+    color: var(--primary)
+}
+h1{
+    font-size: 1.8rem;
+}
+h2{
+    font-size: 1.6rem;
+}
+
+@media screen and (max-width:600px){
+    h1 {
+        font-size: 1.6rem;
+    }
+    h2{
+        font-size: 1.4rem;
+    }
+}

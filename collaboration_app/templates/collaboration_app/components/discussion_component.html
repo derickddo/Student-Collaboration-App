@@ -1,0 +1,96 @@
+{% load static %}
+{% load socialaccount %}
+{% if activities %}
+<div class="activity-container" id="activity-container">
+    {% for activity in activities  %}
+    <div class="activity border-bottom">
+        {% get_social_accounts activity.sender as account %}
+        <div class="avatar">
+            {% if account %}
+            <img src={{ activity.sender.socialaccount_set.all.0.get_avatar_url }} alt="" srcset="">
+            {% else %}
+            <img src="{{ activity.sender.avatar.url }}" alt="">
+            {% endif %}
+            <div class="badge"></div>
+        </div>
+        <div class="activity-right">
+            <span class="name-and-date">
+                <a href="" class="name">{{ activity.sender.first_name }}</a>
+                <p style="color:#999"class="p-secondary gray">{{ activity.created_at|timesince }} ago</p>
+                {% if request.user == group.group_head %}
+                <div class="">
+                    <i class="bi bi-three-dots more-btn"></i>
+                    <span class="dropdown">
+                        <a href="">Edit</a>
+                        <a href="">Delete</a>
+                    </span>
+                </div>
+                
+                {% endif %}
+            </span>
+            
+            <p class="">{{ activity.body }}</p>
+
+            <span class="replies-flex">
+                {% if activity.replies.count == 0 %}
+
+                    <span class="gray"></i>No replies</span>
+
+                {% else %}
+
+                    <span class="replies"> <i class="bi bi-chat-dots"></i>{{ activity.replies.count }}
+                    </span>
+                
+                {% endif %}
+               
+                <i class="bi bi-dot "></i>
+                <span class="reply-btn"><i class="bi bi-reply"></i>reply  </span>
+            </span>
+
+            <form class="reply-input-form" action="" method="post">
+                {% csrf_token %}
+                <input type="hidden" name="message_id" value="{{activity.id}}">
+                <input name="reply" class="reply-input" type="text" placeholder="reply message" >
+                <input class='btn btn-primary' type="submit" value='send'>
+            </form>
+           
+            
+            <div class="reply-container">
+                {% for reply in activity.replies.all  %}
+                <div class="reply">
+                    <div class="activity">
+                        {% get_social_accounts reply.sender as account %}
+                        <div class="avatar">
+                            {% if account %}
+                            <img src={{ reply.sender.socialaccount_set.all.0.get_avatar_url }} alt="" srcset="">
+                            {% else %}
+                            <img width="1rem" src={{reply.sender.avatar.url}} alt="" srcset="">
+                            {% endif %}
+                            
+                            <div class="badge"></div>
+                        </div>
+                        <div class="">
+                            <span class="name-and-date">
+                                <a href="" class="name">{{ reply.sender.first_name }}</a>
+                                <p class="p-secondary">{{created_at|timesince}}</p>
+                            </span>
+                            
+                            <p class="">{{ reply.body }}</p>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{% else %}
+<div class="empty">
+    <div class="">
+        <img class="empty-img" src="{% static 'static_files/chat1.svg' %}" alt="">
+    </div>
+    <p class="gray">No Messages Available</p>
+</div>
+
+{% endif %}

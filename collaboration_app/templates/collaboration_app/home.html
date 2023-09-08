@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load socialaccount %}
+{% block head %}
+<link rel="stylesheet" href="{% static 'css/main.css' %}">
+{% endblock head %}
+{% block content %}
+
+ <!--Welcome container-->
+ <div class="welcome_container">
+    <div class="welcome_img_container">
+        <img src="{% static 'images/undraw_community_re_cyrm.svg' %}" alt="">
+    </div>
+    <div class="welcome_text">
+        <h1>Welcome to Collabify</h1>
+        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Ducimus eveniet earum, rerum esse repudiandae amet quia voluptatem ipsam, natus sint ad. Omnis aspernatur asperiores repudiandae animi error, adipisci cumque deserunt!</p>
+    </div>
+    <a href="#group" class="btn" id="">
+        Browse Groups
+    </a>
+</div>
+<!--End of welcome container-->
+
+
+<!--Groups section-->
+{% include './components/group_component.html' %}
+<!--End of groups section-->
+
+
+<!--Task section-->
+{% include './components/task_component.html' %}
+<!--End of task section-->
+
+
+<!--Discussion section-->
+{% include './components/discussion_component.html' %}
+<!--End of discussion section-->
+
+{% endblock content %}

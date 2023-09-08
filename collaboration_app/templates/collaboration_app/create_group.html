@@ -1,0 +1,39 @@
+{% extends '_base.html' %}
+{% load static %}
+{% load i18n %}
+{% load crispy_forms_tags %}
+{% block content %}
+
+<div class='create_group_wrapper'>
+    <div class="image_container">
+        <div class="overlay">
+            {% comment %} <h1>{% trans "Collabify" %}</h1> 
+            <p>Fostering teamwork, enhancing productivity and amplifying success through seamless collaboration.</p> {% endcomment %}
+            <div class='form_container'>
+                <a href="{{ request.META.HTTP_REFERER }}" class='go_back'><i class='bi bi-arrow-left-circle    go_back'></i>
+                </a>
+                {% if request.path == url %}
+                <h2>{% trans "Update group" %}</h2>
+                <form action="" method="post">
+                    {% csrf_token %}
+                    {{ form|crispy }}
+                    <input type='submit' value='Save' class='btn'/>
+                </form> 
+                {% else %}
+                <h2>{% trans "Create a group" %}</h2>
+                <form action="" method="post">
+                    {% csrf_token %}
+                    {{ form|crispy }}
+                    <br>
+                    <input type='submit' value='create' class='btn btn-secondary'/>
+                </form> 
+                {% endif %}
+               
+            </div>
+        </div>
+    </div>
+
+    
+</div>
+{% endblock content %}
+

@@ -1,0 +1,38 @@
+{% extends 'dashboard_wrapper.html' %}
+{% load socialaccount %}
+{% load static %}
+
+{% block head %}
+<link rel="stylesheet" href="{% static 'css/profile.css' %}">
+{% endblock head %}
+
+{% block content %}
+<div class="profile-container-section">
+    <div class="container">
+        <div class="profile-container">
+            <div class="right-section">
+                <div class="upper">
+                    <div class="img-top-container">
+
+                    </div>
+                    <div class="profile-img">
+                        {% get_social_accounts user as account %}
+                        {% if account %}
+                        <img src="{{ user.socialaccount_set.all.0.get_avatar_url }}" alt="">
+                        {% else %}
+                        <img src="{{ user.avatar.url }}" alt="">
+                        {% endif %}
+                    </div>
+                </div>
+                <div class="bottom">
+
+                </div>
+            </div>
+            <div class="left">
+
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock content %}
+

@@ -1,0 +1,216 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block head %}
+<link rel="stylesheet" href="{% static 'css/_main.css' %}">
+{% endblock head %}
+
+
+{% block content %}
+
+    <!--Navbar-->
+    <div class="navbar-wrapper">
+        <nav class="navbar container">
+            <h1><a class="logo" href="">Collabify</a></h1>
+            <ul class="nav-items-1">
+                <li><a class="nav-link" href="">Home</a></li>
+                <li><a class="nav-link" href="">About</a></li>
+                <li><a class="nav-link" href="#features-section">Features</a></li>
+                <li><a class="nav-link" href="#FAQs-section">FAQs</a></li>
+            </ul>
+            <ul class="nav-items-2">
+                <li><a class="card-btn" href="{% url 'account_login' %}">Login</a></li>
+            </ul>
+            <div class="menu">
+                <div class="line" id="first-line"></div>
+                <div class="line" id="second-line"></div>
+                <div class="line" id="cancel-line"></div>
+            </div>
+        </nav>
+    </div>
+
+    <!--End of Navbar-->
+
+    
+        <!--Hero section-->
+        <section class="hero-section">
+            <div class="hero-container container">
+                <div class="left">
+                    <h1><span class="header-span">Unleash the power of </span>collaboration with collabify</h1>
+
+                    <p>Fostering teamwork, enhancing productivity and amplifying success through seamless collaboration.</p>
+                    
+                    <div class="hero-link">
+                        <a class="btn-cta" href="{% url 'account_login' %}">Get Started</a>
+                    </div>
+                
+                </div>
+                <div class="right">
+                    <img src="{% static 'static_files/students.png' %}" alt="" srcset="">
+                </div>
+            </div>
+            
+        </section>
+        <!--End of hero section-->
+
+        <!--Features section-->
+        <section class="features-section" id="features-section">
+            
+            <div class="features-wrapper container">
+                <div class="header">
+                    <h1>Features</h1>
+                    <p>Discover the features that make Collabify the ultimate platform for students collaboration and projects success.</p>
+                </div>
+
+                
+            
+                <div class="features-container">
+                <div class="feature">
+                        <div class="img-container">
+                            <img src="{% static 'static_files/chat1.svg' %}" alt="">
+                        </div>
+                    
+                        <div class="bottom ">
+                            <h2>Group Creation and Management</h2>
+                            <p>Collabify simplifies the process of creating groups, allowing students to effortlessly form collaborative teams. By providing a user-friendly interface, users can easily create groups, invite members, and establish a centralized space for effective collaboration.</p>  
+                            
+                        </div>
+                    </div>
+                    <div class="feature features-reverse">
+                        
+                    
+                        <div class="bottom">
+                            <h2>Task Assignment and Tracking</h2>
+                            <p>With Collabify, assigning tasks within groups becomes a breeze. Users can allocate responsibilities, set deadlines, and track progress, ensuring that everyone is on the same page and contributing to the project's success.</p>
+                        
+                        </div>
+
+                        <div class="img-container">
+                            <img src="{% static 'static_files/complete_task.svg' %}" alt="">
+                        </div>
+                    </div>
+                    <div class="feature">
+                        <div class="img-container">
+                            <img src="{% static 'static_files/time.svg' %}" alt="">
+                        </div>
+
+                        <div class="bottom "> 
+                            <h2>Deadline and Notification System</h2>
+                            <p> Collabify keeps users informed with timely deadline notifications. Students receive alerts and reminders for upcoming due dates, ensuring they stay on track and complete their tasks punctually. This feature helps in managing time effectively and avoiding last-minute rush.</p>
+                        </div>
+                    </div>
+                
+                </div>
+            
+            </div>
+        </section>
+        <!--End of features section-->
+
+        <!--Testimonial section-->
+        <section class="testimonials-section">
+            <div class="testimonials-wrapper container">
+                <div class="header">
+                    <h1>Testimonials</h1>
+                    <p>Hear what our users have to say about their experience with Collabify and how it has transformed their collaboration journey.</p>
+                </div>
+                
+                <div class="testimonial-container">
+                    <div class="testimonial">
+                        <img src="{% static 'static_files/stewart.jpg' %}" alt="">
+                        <blockquote>
+                        <span><i class="bi bi-quote"></i></span> Lorem ipsum dolor sit amet consectetur adipisicing elit. Praesentium sequi facere non! Praesentium sint minima similique asperiores, suscipit delectus veniam corporis odit hic eaque. Totam non at tenetur consequuntur nisi. <span  class="quote-rotate"><i class="bi bi-quote "></i></span>
+                        </blockquote>
+                    </div>
+                    <div class="testimonial">
+                        <img src="{% static 'static_files/stewart.jpg' %}" alt="">
+                        <blockquote>
+                        <span><i class="bi bi-quote"></i></span> Lorem ipsum dolor sit amet consectetur adipisicing elit. Praesentium sequi facere non! Praesentium sint minima similique asperiores, suscipit delectus veniam corporis odit hic eaque. Totam non at tenetur consequuntur nisi. <span  class="quote-rotate"><i class="bi bi-quote "></i></span>
+                        </blockquote>
+                    </div>
+                    <div class="testimonial">
+                        <img src="{% static 'static_files/stewart.jpg' %}" alt="">
+                        <blockquote>
+                        <span><i class="bi bi-quote"></i></span> Lorem ipsum dolor sit amet consectetur adipisicing elit. Praesentium sequi facere non! Praesentium sint minima similique asperiores, suscipit delectus veniam corporis odit hic eaque. Totam non at tenetur consequuntur nisi. <span class="quote-rotate"><i class="bi bi-quote "></i></span>
+                        </blockquote>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!--End of testimonial section-->
+
+        <!--FQAs section-->
+        <section class="FQAs-section" id="FAQs-section">
+            <div class="FQAs-wrapper container">
+                <div class="header">
+                    <h1>FAQs</h1>
+                    <p>Find answers to commonly asked questions about Collabify's features, functionality, and usage for a seamless user experience.</p>
+                </div>
+                <div class="FQAs-container">
+                    <div class="FQA">
+                        <div class="wrapper">
+                            <div class="question-container">
+                                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
+                                <i class="uil uil-angle-down"></i>
+                            </div>
+                            <div class="answer-container">
+                                <p> Lorem ipsum dolor sit amet consectetur adipisicing elit. Nisi ipsam quidem beatae asperiores ea animi pariatur ex, sit error illum laborum nihil earum est eligendi perferendis. Esse doloremque tempora dolor.</p>
+                            </div>
+                           
+                        </div>
+                        
+                        
+                        
+                    </div>
+                    <div class="FQA">
+                        <div class="wrapper">
+                            <div class="question-container">
+                                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
+                                <i class="uil uil-angle-down"></i>
+                            </div>
+                            <div class="answer-container">
+                                <p> Lorem ipsum dolor sit amet consectetur adipisicing elit. Nisi ipsam quidem beatae asperiores ea animi pariatur ex, sit error illum laborum nihil earum est eligendi perferendis. Esse doloremque tempora dolor.</p>
+                            </div>
+                           
+                        </div>
+                        
+                    </div>
+                    <div class="FQA">
+                        <div class="wrapper">
+                            <div class="question-container">
+                                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
+                                <i class="uil uil-angle-down"></i>
+                            </div>
+                            <div class="answer-container">
+                                <p> Lorem ipsum dolor sit amet consectetur adipisicing elit. Nisi ipsam quidem beatae asperiores ea animi pariatur ex, sit error illum laborum nihil earum est eligendi perferendis. Esse doloremque tempora dolor.</p>
+                            </div>
+                           
+                        </div>
+                        
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!--End of FQAs section-->
+
+        <!--Footer-->
+        <footer>
+            <div class="container">
+                <div class="footer-content">
+                    <p>Collabify &copy; 2023. All rights reserved.</p>
+                    <ul class="footer-links">
+                    <li><a href="#">Terms of Service</a></li>
+                    <li><a href="#">Privacy Policy</a></li>
+                    <li><a href="#">Contact Us</a></li>
+                    </ul>
+                </div>
+            </div>
+        </footer>
+        <!--End of footer-->
+   
+    
+{% endblock content %}
+
+
+{% block javascript %}
+<script src="{% static 'js/main.js' %}"></script>
+{% endblock javascript %}

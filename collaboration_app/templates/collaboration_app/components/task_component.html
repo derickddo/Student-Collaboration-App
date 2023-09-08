@@ -1,0 +1,70 @@
+{% load static %}
+{% load socialaccount %}
+<!--Task section-->
+{% if tasks %}
+
+<div class="task-container select-group-task-container">
+    {% for task in tasks  %}
+    
+   
+    <div class="task">
+        
+        <div class="task-right">
+            <div class="task-top">
+                <h2>{{ task.task_name }}</h2>
+                <span>{{task.created_at|date}}</span>
+            </div>
+            
+
+            {% if task.description %}
+            <p class="description">{{ task.description|truncatewords:6 }}</p>
+            {% else %}
+            <p class="description">No description</p>
+            {% endif %}
+
+            <div class="assign_to"> 
+                
+                <div class="profile">
+                    <div class="avatar">
+                        {% get_social_accounts task.assign_to as account %}
+                        {% if account %}
+                        <img src="{{ task.assign_to.socialaccount_set.all.0.get_avatar_url }}" alt="" srcset="">
+                        {% else %}
+                        <img src="{{ task.assign_to.avatar.url }}" alt="">
+                        {% endif %}
+                        
+                        <div class="badge"></div>
+                    </div>
+                    <span>
+                        <a href="" class="navbar-name">{{ task.assign_to.first_name }}</a>
+                        
+                    </span> 
+                    
+                </div>
+                   
+                <div class="task-bottom">
+                    {% comment %} {% if request.user.id == group.group_head.id  %} {% endcomment %}
+                    <a href="{% url 'get_task' task.pk %}" class=""><i class="bi bi-arrow-right-circle"></i>  
+                    {% comment %} {% endif %}  {% endcomment %}
+                    </a>
+                </div>
+            </div>
+         
+        </div>
+    </div>
+    {% endfor %}
+  
+  
+</div>
+{% else %}
+<div class="empty">
+    <div class="">
+        <img class="empty-img" src="{% static 'static_files/todo.svg' %}" alt="">
+    </div>
+    <p class="gray">No Task Available</p>
+</div>
+
+{% endif %}
+
+
+<!--End of task section-->

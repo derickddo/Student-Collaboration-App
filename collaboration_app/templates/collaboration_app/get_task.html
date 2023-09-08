@@ -1,0 +1,236 @@
+{% extends 'dashboard_wrapper.html' %}
+{% load static %}
+{% load socialaccount %}
+
+
+{% block head %}
+<link rel="stylesheet" href="{% static 'css/get_task.css' %}">
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.11.338/pdf.min.js"></script>
+<script src="https://unpkg.com/docx-parser/dist/docx-parser.min.js"></script>
+
+<script src="{% static 'js/file_read.js' %}"></script>
+
+
+{% endblock head %}
+
+{% block paraphrase_style %}
+<link rel="stylesheet" href="{% static 'css/bootstrap_override.css' %} ">
+{% endblock paraphrase_style %}
+
+{% comment %} {% block bootstrap_css %}
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+{% endblock bootstrap_css %} {% endcomment %}
+
+
+{% block ajax %}
+<script src="https://code.jquery.com/jquery-3.7.0.min.js" integrity="sha256-2Pmvv0kuTBOenSvLm6bvfBSSHrUJ+3A7x6P5Ebd07/g=" crossorigin="anonymous"></script>
+{% endblock ajax %}
+
+
+{% load socialaccount %}
+{% block content %}
+    <div class="get_task_section">
+        <div class="container">
+            <div class="task_wrapper">
+                <div class="get_task_container">
+                    <div style="display:flex; align-items:center; justify-content:space-between">
+                        <h2>{{ task.task_name }}</h2>
+                  
+                        
+                        <p>{{ task.created_at|date }}</p>
+                    </div>
+    
+                    <div class="" style="margin-top:1rem">
+                        <p>Group: {{group.group_name|capfirst}}</p>
+                        <p>Group type: {{group.group_type|capfirst}}</p>
+                        <p>Number of files to submit: {{task.number_of_files}}</p>
+                        <p>Files submitted: {{task.files_submitted}}</p>
+                        <p style="display:flex;gap:0.5rem;align-items:center"><i class="bi bi-alarm"></i>Deadline: {{task.deadline}}</p>
+                    </div>
+                    <div class="" style="margin-top:2rem">
+                        <h3>Task Details</h3>
+                        <div class="task-description">
+                        
+                            <p class="p-secondary">{{ task.description }}</p>
+                        
+                        </div>
+                    </div>
+                    
+                        
+                </div>
+                <div class="files_submitted_container">
+                    <div class="header">
+                        <h3>Files Submitted</h3>
+                    </div>
+                    
+                    <div class="file_container">
+                        {% if task_files %}
+                            {% for file in task_files %}
+                                
+                                <div class="" style="display:flex;justify-content:space-between;">
+                                    
+                                    <div class="task_file">
+                                        {% if file.file_extension == 'pdf' %}
+                                        <a href="{{ file.task_file.url }}"> <img class="file_img" src="{% static 'static_files/pdf.png' %}" alt=""></a>
+
+                                        {% elif file.file_extension == 'doc' or file.file_extension == 'docx' %} 
+                                        <a href="{{ file.task_file.url }}"> <img class="file_img" src="{% static 'static_files/docx-file.png' %}" alt=""></a>
+
+                                        {% elif file.file_extension == 'ppt' or file.file_extension == 'pptx'  %}
+                                        <a href="{{ file.task_file.url }}"> <img class="file_img" src="{% static 'static_files/pptx.png' %}" alt=""></a>
+                                        {% endif %}
+
+                                        <div class="">
+                                            <a   href="{{ file.task_file.url }}">{{ file.file_name|truncatewords:5 }}</a>
+                                            <br>
+                                            <span class='gray'>{{ file.submitted_at }}</span>
+                                        </div>
+                                       
+                                        
+                                    </div>
+                                    <div class="" >
+                                        <a class="gray" href="{% url 'delete_file' file.id %}?q={{file.task.id}}"><i class="bi bi-trash"></i></a>
+                                    </div>
+                                    
+                                        
+                                </div>
+                                
+                            {% endfor %}
+                        {% else %}
+                            <i class="gray">No files submitted</i>
+                        {% endif %}
+                    </div>
+                    
+                    <div class="file_submit">
+                        {% if task.number_of_files != task.files_submitted %}
+                            <form class="file_submit" action="" method="post" enctype="multipart/form-data">
+                                {% csrf_token %}
+                                <input class="btn" type="file" name="file" id="" required>
+                                <input class='btn' type="submit" value="Submit file">
+                            </form>
+                        {% else %}
+                            <i class="gray">All Files Have been submitted</i>
+                        {% endif %}
+                    </div>
+                
+                   
+                </div>
+            </div>
+            <div class="progress_section">
+                
+                <h3>Progress</h3>
+                <div class="wrapper">
+                    <div class="progress_percentage">
+                        <span>{{progress_percentage}}%</span>
+                        <p>Completed</p>
+                    </div>
+                  
+                
+                    <div class="progress-container">
+                        <div class="progress-bar" style="width: {{ progress_percentage }}%; height: 100%;"></div>
+                    </div>
+                </div>
+                
+            </div>
+{% comment %} 
+            <div class="more-section">
+                <button class="btn" style="display:flex; align-items:center;gap:1rem; margin-bottom:2rem">More  <i class="uil uil-angle-down"></i></button>
+                
+                <div class="" style="margin-top:2rem">
+                    <form id="paraphrase-form">
+                        {% csrf_token %}
+                        <div class="paraphrase-container">
+                            <div class="form-floating">
+                                <textarea id="paraphrase-textarea" class="form-control" placeholder="Type your text here" id="text" name="text" style="height: 20rem;:font-size:1.2rem"></textarea>
+
+                                <input type="file" id="file-input" style="display: none;">
+
+                                <a class='btn' type id="select-file-btn">Select file</a>
+                            </div>
+                            <button class="btn" type="submit" id="btn">Paraphrase</button>
+                            <div class="output" id='output'>
+                                <p id="output_p"></p>
+                            </div>
+                             
+                        </div>
+                       
+                    </form> 
+                </div> 
+                <div id="paraphrase-container">
+                    <form class="paraphrase_form" id="paraphrase-form">
+                        {% csrf_token %}
+                        <textarea id="paraphrase-textarea" class="form-control"  maxlength="400" placeholder="Enter text (up to 400 characters)"id="text" name="text" style="height: 20rem;:font-size:1.2rem"></textarea>
+
+                       
+                        <div class="" style="display:flex;justify-content:space-between">
+                            
+                            <div class="" >
+                                <button class="btn" type="submit" id="btn" disabled>Paraphrase</button>
+                                <button id="select-file-button" type="button" class="btn">Select File</button>
+                                <input type="file" id="file-input" style="display: none;">
+                            </div>
+                           
+
+                           
+                            <span id="character-counter">400 characters remaining</span>
+                            
+                        </div>
+                        
+
+                    <div class="output" id='output' style="padding:1rem;" >
+                        <p id="output_p"></p>
+                        <button class='btn' id="copy-btn">Copy</button>
+                    </div>
+                </div>
+
+            </div> {% endcomment %}
+        </div>
+        
+    </div>
+    
+{% endblock content %}
+
+
+{% block paraphrase_ajax_script %}
+<script>
+  $(document).on('submit', '#paraphrase-form', function(e){
+
+    e.preventDefault()
+    let submitButton = $('#btn');
+    submitButton.prop('disabled', true);
+
+    submitButton.html('<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Paraphrasing...');
+
+    $.ajax({
+        url:"{% url 'paraphrase_text' %}",
+        type:'POST',
+        data:{
+            text: $('#paraphrase-textarea').val(),
+            csrfmiddlewaretoken:$('input[name=csrfmiddlewaretoken]').val()
+        },
+        success: function(response){
+            $('#paraphrase-textarea').val('')
+            let paraphrase_text = response.rewritten_text.paraphrase
+            $('#output_p').html(paraphrase_text)
+            console.log(paraphrase_text)
+        },
+        error:function(error){
+            console.log(error)
+        },
+        complete: function() {
+            // Re-enable the submit button and remove loading state
+            submitButton.prop('disabled', false);
+            submitButton.text('Paraphrase');
+        }
+    })
+})
+</script>
+{% endblock paraphrase_ajax_script %}
+
+{% block bootstrap_js %}
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+{% endblock bootstrap_js %}
+
+

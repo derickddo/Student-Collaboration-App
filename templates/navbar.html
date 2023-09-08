@@ -1,0 +1,46 @@
+{% load static %}
+{% load socialaccount %} 
+<!--Sidebar-->
+    <!--to be included in the base-->
+    <div class="side_navbar position-fixed">
+        <nav class="navbar"> 
+            <ul class="navbar_items">
+                <li class=""><a href="{% url 'home' %}"><i class="bi bi-house"></i>Home</a></li>
+                <li class=""><a href="{% url 'create_group' %}"><i class="bi bi-plus-square"></i>Create</a></li>
+                <li class=""><a href="{% url 'join_group' %}"><i class="bi bi-bookmarks"></i>Join</a></li>
+                <li class=""><a href=""><i class="bi bi-person"></i>Profile</a></li>
+            </ul>
+            <div class="navbar_profile"> 
+                {% if request.user.is_authenticated %}
+                <div class="d-flex align-items-center justify-content-between" style="width:80%;">
+                    <div class="d-flex align-items-center gap-2" style="width: 4rem;">
+                        <a href="">
+                            {% get_social_accounts user as account %}
+                            {% if account %}
+                            <img class="rounded-circle" width=30 height=30 src="{{ user.socialaccount_set.all.0.get_avatar_url }}" alt="">
+
+                            {% else %}
+                            <img class="rounded-circle" width="40" height="40" src="{{ user.avatar.url }}" alt="">
+                            {% endif %}
+                           
+                        </a>   
+                        <a class="request_user_name" href="">{{ request.user.first_name }} </a>
+                    </div> 
+
+                   <div class="">  <i class="profile_more bi bi-caret-up-fill"></i></div>
+                   
+                </div>
+
+                <div class="custom_dropdown">
+                    <a class='logout' href="{% url 'account_logout' %}">Logout</a>
+                    
+                    <a class='profile' href="{% url 'profile' user.id %}">Profile</a>
+                </div>
+                {% else %}
+                    <a class='btn' href="{% url 'account_login' %}">Sign in</a>
+                {% endif %}
+            </div> 
+        </nav>  
+  
+    </div>
+    <!--End of sidebar-->

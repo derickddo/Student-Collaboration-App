@@ -1,0 +1,21 @@
+{% extends '_base.html' %}
+{% load static %}
+{% load i18n %}
+
+{% block content %}
+
+<div class="container">
+    <div class="add_member_form ">
+        <h2>{% trans "Join group" %}</h2>
+        <form class="" action="" method="post">
+            <a href="{{ request.META.HTTP_REFERER }}"><i class="bi bi-x-lg" style="float:right; font-size:1.5rem; color:#000"></i></a>
+            
+            <br>
+            {% csrf_token %}
+            <label for="code">Please enter group code to join:</label><br>
+            <input placeholder='Group code eg:ZAF3H21W' type="text" name="code" required>
+            <input type="submit" class="btn btn-secondary" value="Proceed">
+        </form>
+    </div>
+</div>
+{% endblock content %}

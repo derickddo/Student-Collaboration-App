@@ -1,0 +1,230 @@
+{% extends 'dashboard_wrapper.html' %}
+{% load static %}
+{% load crispy_forms_tags %}
+{% load socialaccount %}
+{% block ajax %}
+<script src="https://code.jquery.com/jquery-3.7.0.min.js" integrity="sha256-2Pmvv0kuTBOenSvLm6bvfBSSHrUJ+3A7x6P5Ebd07/g=" crossorigin="anonymous"></script>
+{% endblock ajax %}
+
+{% block head %}
+<link rel="stylesheet" href="{% static 'css/dashboard.css' %}">
+<link rel="stylesheet" href="{% static 'css/get_group.css' %}">
+
+{% endblock head %}
+
+
+{% block whiteboard %}
+<li><a href="https://excalidraw.com/" target="_blank"><i class="bi bi-mortarboard"></i>Whiteboard</a></li>
+{% endblock whiteboard %}
+
+{% block content %}
+ <!--Selected group section-->
+ <section class="selected-group-section">
+    <div class="selected-group-wrapper container">
+        <div class="selected-group-container">
+            <div class="select-group">
+                <div class="top">
+                    <div class="" style="display:flex;gap:3rem">
+                        <h1>{{ group.group_name }}</h1>
+                        {% if request.user == group.group_head %}
+                        <i class="bi bi-three-dots more-btn"></i>
+                        <span class="dropdown">
+                            <a href="">Edit</a>
+                            <a href="">Delete</a>
+                        </span>
+                    {% endif %}
+                        
+                    </div>
+                    <span class="gray"><i class="bi bi-lock gray"></i>{{ group.group_type }}</span>
+                      
+                </div>
+                {% if group.description %}
+                <p class="description ">{{ group.description }}</p>
+                {% else %}
+                <p class="gray">No description</p>
+                {% endif %}
+
+                <div class="files-wrapper">
+                    <h1>Assignment Files</h1>
+                    <div class="files-container">
+                        {% if task_files %}
+                        {% for file in task_files %}
+                        
+                            <div class="file">
+                                {% if file.file_extension == 'pdf' %}
+                                <a href="{{ file.task_file.url }}"> <img class="file-img" src="{% static 'static_files/pdf.png' %}" alt=""></a>
+
+                                {% elif file.file_extension == 'doc' or file.file_extension == 'docx' %} 
+                                <a href="{{ file.task_file.url }}"> <img class="file-img" src="{% static 'static_files/docx-file.png' %}" alt=""></a>
+
+                                {% elif file.file_extension == 'ppt' or file.file_extension == 'pptx'  %}
+                                <a href="{{ file.task_file.url }}"> <img class="file-img" src="{% static 'static_files/pptx.png' %}" alt=""></a>
+                                {% endif %}
+
+                                <div class="">
+                                    <a href="{{ file.task_file.url }}">{{ file.file_name|truncatewords:5  }}</a>
+                                <br>
+
+                                <span class='gray'>{{file.submitted_at|date}}</span>
+                                </div>
+                                
+                                
+                            </div>
+                        {% endfor %}
+
+                        {% else %}
+                        <div class="empty" style="height: 1rem;">
+                            {% comment %} <div class="">
+                                <img class="empty-img" src="{% static 'static_files/todo.svg' %}" alt="">
+                            </div> {% endcomment %}
+                            <p class="gray">No Files Available</p>
+                        </div>
+                        {% endif %}
+                    </div>
+                </div>
+
+                
+
+            </div>
+
+            
+           
+        </div>
+
+        <div class="members-wrapper">
+            <div class="members-header">
+                <h2>Members</h2>
+            </div>
+            {% if members %}
+            
+            <div class="members-container">
+                <div class="members-padding">
+                    
+                    {% for member in members  %}
+                    <div class="activity">
+                        <div class="avatar">
+                            {% get_social_accounts member as account %}
+                            {% if account %}
+                            <img src="{{ member.socialaccount_set.all.0.get_avatar_url }}" alt="" srcset="">
+                            {% else %}
+                            <img src="{{ member.avatar.url }}" alt="">
+                            {% endif %}
+                            <div class="badge"></div>
+                        </div>
+                        <span style="display:flex;justify-content:space-between;  width:100%">
+                            <div>
+                              
+                                <a href="" class="name">{{ member.first_name }}</a>
+                                <br>
+                                    
+                                {% if  member == group.group_head%}
+                                    <span class='gray'>group leader</span>
+                                {% else %}
+                                    <span class='gray'>member</span>
+                                {% endif %}
+                                
+                            </div>
+                            {% if request.user == group.group_head %}
+                            <a class='btn btn-primary' name='q' href="{% url 'remove_member' group.pk %}?q={{ member.pk }}">Remove</a> 
+                            {% endif %}
+                            
+                        </span> 
+                        
+                    </div>
+                    {% endfor %}
+                </div> 
+            </div>
+            {% else %}
+
+            {% endif %}
+            {% if request.user == group.group_head %}
+                <div class="add-member">
+                <a class="btn btn-primary" href="{% url 'add_member' group.pk %}">Add a member</a>
+                </div>
+            {% endif %}
+        </div>
+
+        <section class="task-section">
+            <div class="task-wrapper">
+                <div class="task-header">
+                    <h1>Tasks Available</h1>
+                    {% if request.user == group.group_head %}
+                        <div class="">
+                            <a class="btn" href="{% url 'create_task' group.pk %}">Create Task</a>
+                        </div>
+                    {% endif %}
+                </div>
+                
+                {% include 'collaboration_app/components/task_component.html' %}
+                
+            </div>
+            
+        </section>
+
+        <section class="activity-section" id="activity-section">
+            <div class="activity-wrapper">
+                <h1>Discussions</h1>
+                {% include 'collaboration_app/components/discussion_component.html' %}
+                <form id="message-form"  class="input-message" method='post'>
+                    {% csrf_token %}
+                    <input type="text" id='message' name='message' placeholder="Write your message">
+                    <input type="submit" class="btn btn-primary" value="Send">
+                </form>
+               
+            </div>
+        </section>
+    </div>
+</section>
+<!--End of selected group section-->
+{% endblock content %}
+
+<!--{% block ajax_script %}
+<script type="text/javascript">
+    $(document).on('submit', '#message-form', function(e){
+
+        e.preventDefault()
+        
+        $.ajax({
+            type:'POST',
+            url:"{% url 'get_group' group.pk %}",
+            data:{
+                message: $('#message').val(),
+                csrfmiddlewaretoken: $('input[name=csrfmiddlewaretoken]').val(),
+            },
+            success:function(response){
+                console.log(response)
+                data = JSON.parse(response)
+                let sender = data[0].fields.sender
+                let body = data[0].fields.body
+                let created_at = data[0].fields.created_at
+                console.log(`${sender}`)
+
+                $('#message').val('')
+
+              
+
+                $('#activity-container').prepend(newMessage)
+            },
+            
+            error: function(error){
+                alert('Error occurred')
+            }
+        })
+
+        {% comment %} $.ajax({
+            type:'GET',
+            url:"{% url 'get_group' group.pk %}",
+            success: function(response){
+
+                let message = JSON.parse(response)
+                let sender = message[0].fields.sender
+                let body = message[0].fields.body
+                let created = message[0].fields.created_at
+            }
+        }) {% endcomment %}
+
+
+    })
+
+</script>
+{% endblock ajax_script %} --> 

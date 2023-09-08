@@ -1,0 +1,71 @@
+{% load static %}
+{% if groups.count == 1 %}
+            {% for group in groups  %}
+            <div class="group">
+                <div class="" style="display:flex;justify-content:space-between">
+                    <h2>{{ group.group_name }}</h2>
+                    <span><i class="bi bi-lock"></i>{{ group.group_type }}</span>
+                </div>
+                {% if group.description %}
+                <p class="description">{{ group.description|truncatewords:6 }}</p>
+                <br>
+            
+                {% else %}
+                <p class="description">No description</p>
+                <br>
+                
+                {% endif %}
+                
+                <span class="group-span"><i class="bi bi-people"></i>
+                    <span>Members: {{ group.members.count }}</span></span> 
+                <span class="group-span"><i class="bi bi-calendar-date"></i><span>Created at: {{ group.created_at|date }}</span> </span>
+
+                <div class="group-btn">
+                    <div class="membership-container group-span">
+                        <img src="{% static 'static_files/member-card.png' %}" alt="">
+                        <i>Member</i>
+                    </div>
+                    
+                    <a href="{% url 'get_group' group.pk %}" class="btn-outline go-to-group-btn">Go to group</a>
+                </div>  
+            </div>
+            {% endfor %}
+
+            {% else %}
+            <div class="group-container">
+            
+                {% for group in groups  %}
+    
+                <div class="group">
+                    <div class="" style="display:flex;justify-content:space-between">
+                        <h2>{{ group.group_name }}</h2>
+                        <span><i class="bi bi-lock"></i>{{ group.group_type }}</span>
+                    </div>
+                    {% if group.description %}
+                    <p class="description">{{ group.description|truncatewords:6 }}</p>
+                    <br>
+                
+                    {% else %}
+                    <p class="description">No description</p>
+                    <br>
+                    
+                    {% endif %}
+                    
+                    <span class="group-span"><i class="bi bi-people"></i>
+                        <span>Members: {{ group.members.count }}</span></span> 
+                    <span class="group-span"><i class="bi bi-calendar-date"></i><span>Created at: {{ group.created_at|date }}</span> </span>
+    
+                    <div class="group-btn">
+                        <div class="membership-container group-span">
+                            <img src="{% static 'static_files/member-card.png' %}" alt="">
+                            <i>Member</i>
+                        </div>
+                        
+                        <a href="{% url 'get_group' group.pk %}" class="btn-outline go-to-group-btn">Go to group</a>
+                    </div>  
+                </div>
+                {% endfor %}
+            </div>
+            
+{% endif %}
+        

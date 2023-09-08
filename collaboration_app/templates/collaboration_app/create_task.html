@@ -1,0 +1,48 @@
+{% extends '_base.html' %}
+{% load static %}
+{% load i18n %}
+{% load crispy_forms_tags %}
+{% block content %}
+
+<div class='create_group_wrapper'>
+    <div class="image_container">
+        <div class="overlay">
+            {% comment %} <h1>{% trans "Collabify" %}</h1> 
+            <p>Fostering teamwork, enhancing productivity and amplifying success through seamless collaboration.</p> {% endcomment %}
+            <div class='form_container'>
+                <a href="{{ request.META.HTTP_REFERER }}" class='go_back'><i class='bi bi-arrow-left-circle    go_back'></i>
+                </a>
+                
+                <h2>{% trans "Create a task" %}</h2>
+                <form class="create_task_form" action="" method="post">
+             
+                    {% csrf_token %}
+                    <label for="task_name">Task Name:</label>
+                    {{ form.task_name }}
+                    <label for="description">Description:</label>
+                    {{ form.description }}
+                    <label for="number_of_files">Number of files to be submitted:</label>
+                    {{ form.number_of_files }}
+                    <label for="deadline">Deadline:</label>
+                    <input required type="datetime-local" name="deadline" id="">
+                    
+                    <label for="assign_to">Assign To:</label>
+                    <select name="assign_to" value="{{ member.pk }}" id="">
+                        {% for member in members  %}
+                                <option value="{{ member.pk }}">{{ member.first_name }} {{ member.last_name }}
+                                </option>
+                          
+                        {% endfor %}
+                    </select>
+                    <br>
+                    <input type='submit' value='create' class='btn btn-secondary'/>
+                </form> 
+            </div>
+        </div>
+    </div>
+
+    
+</div>
+
+{% endblock content %}
+

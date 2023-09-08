@@ -1,0 +1,43 @@
+{% extends '_base.html' %} 
+{% load i18n %} 
+{% load account socialaccount %} 
+{% load crispy_forms_tags %} 
+{% load static %} 
+{% block content %} 
+<div class='create_group_wrapper'>
+    <div class="image_container">
+        <div class="overlay">
+            <div class='form_container'>
+                <a href="{{ request.META.HTTP_REFERER }}" class='go_back'><i class='bi bi-arrow-left-circle  go_back'></i>
+                </a>
+                <h2 class="">{% trans "Sign Up" %}</h2>
+                {% comment %} <div class="" style="display:flex; justify-content:center; align-items:center; height: 5rem; width:100%">
+                    <a style="width: 18rem; height:2.8rem" title="Google" class="socialaccount_provider google btn d-flex justify-content-center align-items-center gap-3" href="{% provider_login_url 'google'%}">
+                        <img class="google" src="{% static 'static_files/new.png' %}" alt="">
+                        
+                        <span style="color:white" >Continue with Google</span> 
+                    </a>
+                </div>  {% endcomment %}
+                <form method="post" action="{% url 'account_signup' %}">
+                    {% csrf_token %}
+                    {{ form|crispy }}
+                    {% if redirect_field_value %}
+                        <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />
+                    {% endif %}
+                    <br>
+                    <input class='btn btn-primary' type="submit" value="Sign up">  
+                </form> 
+               <p></p>
+                <span class='dont_have_acc'>Have an account ? <a href="{{ login_url }}">sign in</a>
+                </span>
+                
+                 
+                    
+            </div>
+        </div>
+    </div>
+
+  
+</div>
+{% endblock %}
+

@@ -1,0 +1,90 @@
+{% extends 'dashboard_wrapper.html' %}
+{% load static %}
+
+{% block paraphrase_style %}
+<link rel="stylesheet" href="{% static 'css/paraphrase.css' %} ">
+{% endblock paraphrase_style %}
+
+{% block bootstrap_css %}
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+{% endblock bootstrap_css %}
+
+
+{% block ajax %}
+<script src="https://code.jquery.com/jquery-3.7.0.min.js" integrity="sha256-2Pmvv0kuTBOenSvLm6bvfBSSHrUJ+3A7x6P5Ebd07/g=" crossorigin="anonymous"></script>
+{% endblock ajax %}
+
+{% block content %}
+<div class="container">
+    <h1>Paraphrase text</h1>
+   
+        <form id="paraphrase-form">
+            {% csrf_token %}
+            <div class="paraphrase-container">
+                <div class="form-floating">
+                    <textarea class="form-control" placeholder="Leave a comment here" id="text" name="text" style="height: 20rem;padding-top:2rem;:font-size:1.2rem"></textarea>
+                    <label for="text">Type your text here</label>
+                  </div>
+
+                <div class="output" id='output'>
+                    <p id="output_p"></p>
+                </div>
+                 
+            </div>
+            <button class="btn" type="submit" id="btn">Paraphrase</button>
+        </form> 
+        <form method="post" enctype="multipart/form-data">
+            <input type="file" name="file" id="fileInput">
+            <button type="button" id="paraphraseButton">Paraphrase</button>
+        </form>
+        
+        <div id="paraphraseText"></div>
+        
+   
+   
+</div>
+
+{% endblock content %}
+
+{% block paraphrase_ajax_script %}
+<script>
+  $(document).on('submit', '#paraphrase-form', function(e){
+
+    e.preventDefault()
+    let submitButton = $('#btn');
+    submitButton.prop('disabled', true);
+    submitButton.html('<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Paraphrasing...');
+
+    $.ajax({
+        url:"{% url 'paraphrase_text' %}",
+        type:'POST',
+        data:{
+            text: $('#text').val(),
+            csrfmiddlewaretoken:$('input[name=csrfmiddlewaretoken]').val()
+        },
+        success: function(response){
+           $('#text').val('')
+            let paraphrase_text = response.rewritten_text.paraphrase
+            $('#output_p').html(paraphrase_text)
+        },
+        error:function(error){
+            console.log(error)
+        },
+        complete: function() {
+            // Re-enable the submit button and remove loading state
+            submitButton.prop('disabled', false);
+            submitButton.text('Submit');
+        }
+    })
+})
+</script>
+{% endblock paraphrase_ajax_script %}
+
+{% block bootstrap_js %}
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+{% endblock bootstrap_js %}
+
+
+
+
+

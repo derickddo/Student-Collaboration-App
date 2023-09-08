@@ -1,0 +1,20 @@
+{% extends '_base.html' %}
+{% load static %}
+{% load i18n %}
+
+{% block content %}
+
+    <div class="add_member_form">
+        <h2>{% trans "Add a member" %}</h2>
+        <form class="" action="" method="post">
+            <a href="{{ request.META.HTTP_REFERER }}"><i class="bi bi-x-lg" style="float:right; font-size:1.5rem; color:#000"></i></a>
+            
+            <br>
+            {% csrf_token %}
+            <label for="email">Please enter an email address to add a member:</label><br>
+            <input placeholder='Email address' type="email" name="email" required>
+            <input type="submit" class="btn" value="Proceed">
+        </form>
+    </div>
+   
+{% endblock content %}

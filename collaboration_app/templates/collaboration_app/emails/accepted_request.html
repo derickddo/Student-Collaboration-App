@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+<h1>Hello {{ user_name }},<h1>
+
+<p>Good news! Your join request to join the "{{ group_name }}" group has been accepted by the group leader.<p>
+
+<p>You are now a member of the group. Start collaborating with your fellow members on academic-related assignments and projects.<p>
+
+<p>Click the button below to go to the group:<p>
+<a href="http://127.0.0.1:8000{% url 'get_group' group_id %}">Go to group</a>
+
+<p>Thank you for joining us,<p>
+<p>The Collabify Team<p>
+
+</body>
+</html>
+
+

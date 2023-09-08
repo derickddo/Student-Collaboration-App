@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <title>Document</title>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="{% static 'css/common.css' %}">
+</head>
+<body>
+<h1>Hello {{ group_head }}</h1>,
+
+You have received a join request from {{ user_name }} to join the "{{ group_name }}" group. </p>
+
+Please review the request and take appropriate action.
+
+To accept the request, click the button below: 
+<a class="btn" href="http://127.0.0.1:8000{% url 'accept_join_request' user_id %}?q={{group_id}}">Accept</a> 
+
+{% comment %} To ignore the request, click the button below:
+{% url 'ignore_join_request' user_id %} {% endcomment %}
+
+<p>Thank you,</p>
+The Collabify Team
+</body>
+</html>
+
