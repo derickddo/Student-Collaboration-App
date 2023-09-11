@@ -2,9 +2,9 @@
 {% load static %}
 {% load crispy_forms_tags %}
 {% load socialaccount %}
-{% block ajax %}
+<!-- 
 <script src="https://code.jquery.com/jquery-3.7.0.min.js" integrity="sha256-2Pmvv0kuTBOenSvLm6bvfBSSHrUJ+3A7x6P5Ebd07/g=" crossorigin="anonymous"></script>
-{% endblock ajax %}
+ -->
 
 {% block head %}
 <link rel="stylesheet" href="{% static 'css/dashboard.css' %}">
@@ -178,8 +178,8 @@
 <!--End of selected group section-->
 {% endblock content %}
 
-<!--{% block ajax_script %}
-<script type="text/javascript">
+{% block ajax %}
+<!-- <script type="text/javascript">
     $(document).on('submit', '#message-form', function(e){
 
         e.preventDefault()
@@ -226,5 +226,22 @@
 
     })
 
-</script>
-{% endblock ajax_script %} --> 
+</script> -->
+    <script>
+        console.log('hello')
+        let xhr = new XMLHttpRequest()
+        let url = "{% url 'get_group' group.pk %}"
+        function fetchMessage(){
+            xhr.open('GET', 'http://127.0.0.1:8000/get-group/8', true)
+            xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest')
+            xhr.onreadystatechange = function(){
+                if(xhr.readyState == 4 && xhr.status == 200){
+                    console.log(xhr.response)
+                }
+            }
+            xhr.send()
+        }
+
+        fetchMessage()
+    </script>
+{% endblock ajax %}

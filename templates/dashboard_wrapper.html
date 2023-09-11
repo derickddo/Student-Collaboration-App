@@ -27,8 +27,6 @@
     <!--Dashboard stylesheet-->
     <link rel="stylesheet" href="{% static 'css/dashboard.css' %}">
 
-    {% block ajax %}{% endblock ajax %}
-
     <title>Document</title>
 </head>
 <body>
@@ -132,6 +130,11 @@
         <!--End of main section-->
         
     </main>
+    
+    {% block ajax %}
+        
+    {% endblock ajax %}
+        
     
   <script src= {% static 'js/dashboard.js' %}></script>  
   {% block paraphrase_ajax_script %}

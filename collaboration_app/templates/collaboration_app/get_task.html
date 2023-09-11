@@ -105,10 +105,16 @@
                     
                     <div class="file_submit">
                         {% if task.number_of_files != task.files_submitted %}
-                            <form class="file_submit" action="" method="post" enctype="multipart/form-data">
+                       
+                            <form class="" action="" method="post" enctype="multipart/form-data">
                                 {% csrf_token %}
-                                <input class="btn" type="file" name="file" id="" required>
-                                <input class='btn' type="submit" value="Submit file">
+                                <p class="file-label">File: </p>
+                                <div class="">
+                                    <button class="btn btn-primary select-btn">Select a file</button>
+                                    <input class="btn btn-primary file-input " type="file" name="file" id="" required>
+                                    <input class='btn btn-primary' type="submit" value="Submit file">
+                                </div>
+                                
                             </form>
                         {% else %}
                             <i class="gray">All Files Have been submitted</i>
@@ -129,7 +135,7 @@
                   
                 
                     <div class="progress-container">
-                        <div class="progress-bar" style="width: {{ progress_percentage }}%; height: 100%;"></div>
+                        <div class="progress-bar" style="width:{{progress_percentage}}; height:100%;"></div>
                     </div>
                 </div>
                 
@@ -143,7 +149,7 @@
                         {% csrf_token %}
                         <div class="paraphrase-container">
                             <div class="form-floating">
-                                <textarea id="paraphrase-textarea" class="form-control" placeholder="Type your text here" id="text" name="text" style="height: 20rem;:font-size:1.2rem"></textarea>
+                                <textarea id="paraphrase-textarea" class="form-control" placeholder="Type your text here" id="text" name="text" style="height: 20rem;font-size:1.2rem"></textarea>
 
                                 <input type="file" id="file-input" style="display: none;">
 
@@ -161,7 +167,7 @@
                 <div id="paraphrase-container">
                     <form class="paraphrase_form" id="paraphrase-form">
                         {% csrf_token %}
-                        <textarea id="paraphrase-textarea" class="form-control"  maxlength="400" placeholder="Enter text (up to 400 characters)"id="text" name="text" style="height: 20rem;:font-size:1.2rem"></textarea>
+                        <textarea id="paraphrase-textarea" class="form-control"  maxlength="400" placeholder="Enter text (up to 400 characters)"id="text" name="text" style="height: 20rem;font-size:1.2rem"></textarea>
 
                        
                         <div class="" style="display:flex;justify-content:space-between">
@@ -232,5 +238,3 @@
 {% block bootstrap_js %}
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
 {% endblock bootstrap_js %}
-
-

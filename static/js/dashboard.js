@@ -14,6 +14,9 @@ const notification_btn = document.querySelector('.notification-btn')
 const notification_wrapper = document.querySelector('.notification-wrapper')
 const more_btn = document.querySelectorAll('.more-btn')
 const dropdown = document.querySelectorAll('.dropdown')
+const select_btn = document.querySelector('.select-btn')
+const file_input = document.querySelector('.file-input')
+let file_label = document.querySelector('.file-label')
 
 arrow_up.addEventListener('click', ()=>{
     drop_up.classList.toggle('drop-up-toggle')
@@ -55,6 +58,14 @@ more_btn.forEach(item =>{
         console.log(drop_down)
         
     })
+})
+
+select_btn.addEventListener('click', ()=>{
+    file_input.click()
+    
+})
+file_input.addEventListener('change', (event)=>{
+    file_label.innerHTML = 'File:' +' '+ file_input.value.substring(0, 20) + '...'
 })
 
 // function handleDropdown() {

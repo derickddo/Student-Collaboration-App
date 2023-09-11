@@ -14,10 +14,13 @@ from django.conf import settings
 
 
 
+
 # Create your views here.
 def home(request):
     return render(request, 'collaboration_app/_home.html')
 
+def is_ajax(request):
+    return request.headers.get('X-Requested-With') == 'XMLHttpRequest'
 
 def paraphrase_text(request):
     if request.method == 'POST':
@@ -53,6 +56,7 @@ def private_dashboard(request):
     tasks = Task.objects.filter(assign_to=user)
     activities = GroupMessage.objects.filter(sender = user)
     context = {'groups':groups, 'tasks':tasks, 'activities':activities}
+
     return render(request, 'collaboration_app/dashboard.html', context)
 
 
@@ -65,6 +69,7 @@ def public_dashboard(request):
         q = ''
     groups = Group.objects.filter(Q(group_type__icontains='public'), Q(group_name__icontains=q))
     context = {'groups':groups}
+    
     return render(request, 'collaboration_app/public_dashboard.html', context)
 
 
@@ -206,6 +211,7 @@ def get_group(request, id):
             'activities':activities,
             'task_files':task_files
         }
+
         return render(request, 'collaboration_app/get_group.html', context)
     else:
         return HttpResponse("Oops, Sorry you are not a member of this group!")

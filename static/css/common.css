@@ -16,7 +16,7 @@
 }
 
 .btn-secondary:hover{
-    background:var(--secondary-1);
+    background:var(--secondary);
     color: var(--white);
 }
 .btn-outline{

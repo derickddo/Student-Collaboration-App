@@ -27,10 +27,12 @@
 .header{
     height: 13%;
     border-bottom: 1px solid #eee;
+    display: flex;
+    align-items: center;
 }
 .file_container{
     padding: 1rem;
-    height: 72%;
+    height: 60%;
     overflow-y: scroll;
     display: flex;
     flex-direction: column;
@@ -48,12 +50,20 @@ input[type='file']{
     width: 100%;
 }
 .file_submit{
-    height: 15%;
+
+    
+    height: 27%;
     border-top: 1px solid #eee;
 }
-.header, .file_submit{
+.file_submit form{
+    height: 100%;
     display: flex;
-    align-items: center;
+    flex-direction: column;
+    gap: 2rem;
+    justify-content: center;
+    width: 100%;
+}
+.header, .file_submit{
     padding:0 1rem;
     gap: 1rem;
 }
